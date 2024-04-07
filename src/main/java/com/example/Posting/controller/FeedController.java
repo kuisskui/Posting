@@ -11,5 +11,4 @@ public class FeedController {
         model.addAttribute("greeting", "Sawaddee");
         return "feed";
     }
-
 }
