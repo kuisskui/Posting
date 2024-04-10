@@ -19,13 +19,13 @@ public class SignupService {
         return userRepository.findByUsername(username) == null;
     }
 
-    public void createMember(User member) {
+    public void createMember(User user) {
         User newUser = new User();
-        newUser.setFirstName(member.getFirstName());
-        newUser.setLastName(member.getLastName());
-        newUser.setUsername(member.getUsername());
+        newUser.setFirstName(user.getFirstName());
+        newUser.setLastName(user.getLastName());
+        newUser.setUsername(user.getUsername());
 
-        String hashedPassword = passwordEncoder.encode(member.getPassword());
+        String hashedPassword = passwordEncoder.encode(user.getPassword());
 
         newUser.setPassword(hashedPassword);
 
