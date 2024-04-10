@@ -32,7 +32,7 @@ public class SignupService {
         userRepository.save(newUser);
     }
 
-    public User getMember(String username) {
+    public User getUser(String username) {
         return userRepository.findByUsername(username);
     }
 }
