@@ -19,7 +19,7 @@ public class SignupService {
         return userRepository.findByUsername(username) == null;
     }
 
-    public void createMember(User user) {
+    public void createUser(User user) {
         User newUser = new User();
         newUser.setFirstName(user.getFirstName());
         newUser.setLastName(user.getLastName());
