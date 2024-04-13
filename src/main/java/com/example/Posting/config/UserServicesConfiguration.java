@@ -75,6 +75,8 @@ public class UserServicesConfiguration {
             } catch (OAuth2AuthenticationException exception) {
                 throw exception;
             }
+
+            System.out.println(user.getUserInfo());
             return user;
         }
     }
