@@ -29,7 +29,7 @@ public class SignupController {
 
 
         if (signupService.isUsernameAvailable(user.getUsername())) {
-            signupService.createMember(user);
+            signupService.createUser(user);
             model.addAttribute("signupSuccess", true);
         } else {
             model.addAttribute("signupError", "Username not available");
