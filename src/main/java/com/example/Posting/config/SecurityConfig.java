@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
@@ -53,6 +54,13 @@ public class SecurityConfig {
                     .permitAll()
             );
 
+        http.headers(headers -> headers
+                .xssProtection(Customizer.withDefaults())
+                .contentSecurityPolicy(csp -> csp
+                        .policyDirectives("form-action 'self'; script-src 'self'"))
+        );
+
+
         ClientRegistrationRepository repository =
                 context.getBean(ClientRegistrationRepository.class);
 
@@ -63,7 +71,7 @@ public class SecurityConfig {
                         .userInfoEndpoint(userInfo -> userInfo
                                 .oidcUserService(oidcUserService)
                         )
-                        .successHandler(new SimpleUrlAuthenticationSuccessHandler("/"))
+                        .successHandler(new SimpleUrlAuthenticationSuccessHandler("/sign"))
                         .loginPage("/login").permitAll()
                 );
         }
