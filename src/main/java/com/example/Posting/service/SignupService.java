@@ -21,12 +21,11 @@ public class SignupService {
 
     public void createUser(User user) {
         User newUser = new User();
+        newUser.setEmail(user.getEmail());
         newUser.setFirstName(user.getFirstName());
         newUser.setLastName(user.getLastName());
         newUser.setUsername(user.getUsername());
-
         String hashedPassword = passwordEncoder.encode(user.getPassword());
-
         newUser.setPassword(hashedPassword);
 
         userRepository.save(newUser);
