@@ -31,5 +31,14 @@ public class UserDetailsServiceImp implements UserDetailsService {
                 user.getUsername(), user.getPassword(),
                 new ArrayList<>());
     }
+
+    public void saveUserDetails(String username, String email, String firstName, String lastName){
+        User user = new User();
+        user.setUsername(username);
+        user.setEmail(email);
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        userRepository.save(user);
+    }
 }
 
