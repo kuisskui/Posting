@@ -12,7 +12,7 @@
 
 <div class="container w-50 p-3">
     <h1 class="display-5">Sign Up</h1>
-
+    <a th:href="@{/}">Terms of Service</a>
     <form action="#" th:action="@{/signup}" method="POST">
         <div id="success-msg" th:if="${signupSuccess}"
              class="alert alert-success">
@@ -38,6 +38,10 @@
         <div class="mb-3">
             <label for="inputPassword">Password</label>
             <input id="inputPassword" type="password" name="password" class="form-control">
+        </div>
+        <div>
+            <input type="checkbox" id="terms" name="terms" value="terms" required>
+            <label for="terms">I have read <a th:href="@{/terms}">Terms of Service</a></label>
         </div>
 
         <button id="submit-button" type="submit" class="btn btn-primary">Sign Up</button>

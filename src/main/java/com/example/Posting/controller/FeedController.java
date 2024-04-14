@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class FeedController {
     @GetMapping("/")
     public String feed(Model model){
-        model.addAttribute("greeting", "Sawaddee");
+        model.addAttribute("greeting", "kkk");
         return "feed";
     }
 }
