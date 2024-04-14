@@ -10,31 +10,19 @@
 <body>
 <div th:insert="~{fragments/header :: header}"></div>
 
-<div>
-    <input type="text" id="searchInput" placeholder="Search by hashtag...">
-    <button onclick="searchPosts()">Search</button>
-</div>
-<div id="recommendations"></div>
-<div>
-    <b><span sec:authentication="name"></span></b>
-    <textarea id="textInput" placeholder="Write your post here..."></textarea>
-    <button onclick="submitPost()">Submit Post</button>
 <div class="container">
-    <h1 class="display-6">Welcome to Posting</h1>
-
-    <p><span th:text="${greeting}"></span></p>
-
     <div sec:authorize="isAuthenticated()">
-        <p>Khun <b><span sec:authentication="name"></span></b></p>
-        <a class="btn btn-primary" th:href="@{/logout}">Logout</a>
-    </div>
-    <div sec:authorize="isAnonymous()">
-        <a class="btn btn-primary" th:href="@{/login}">Login</a>
-        <a class="btn btn-light" th:href="@{/signup}">Sign Up</a>
-    </div>
-</div>
-
-<div id="feed"></div>
+        <div>
+            <input type="text" id="searchInput" placeholder="Search by hashtag...">
+            <button onclick="searchPosts()">Search</button>
+        </div>
+        <div id="recommendations"></div>
+        <div>
+            <b><span sec:authentication="name"></span></b>
+            <textarea id="textInput" placeholder="Write your post here..."></textarea>
+            <button onclick="submitPost()">Submit Post</button>
+        </div>
+        <div id="feed"></div>
 
 <script>
     // Sample data of posts
@@ -154,6 +142,12 @@
     // Call renderRecommendations function to initially render recommendation tags
     renderRecommendations();
 </script>
+    </div>
+    <div sec:authorize="isAnonymous()">
+        <a class="btn btn-primary" th:href="@{/login}">Login</a>
+        <a class="btn btn-light" th:href="@{/signup}">Sign Up</a>
+    </div>
+</div>
 </body>
 </html>
 
