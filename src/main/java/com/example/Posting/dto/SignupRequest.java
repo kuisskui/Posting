@@ -1,5 +1,6 @@
 package com.example.Posting.dto;
 
+import com.example.Posting.validation.ValidPassword;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -18,7 +19,7 @@ public class SignupRequest {
     private String email;
 
     @NotBlank
-    @Size(min=12, max=128, message = "Password must have at least 12 characters")
+    @ValidPassword
     private String password;
 
     @NotBlank
