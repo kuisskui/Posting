@@ -24,13 +24,16 @@ public class SignupService {
     }
 
     public void createUser(SignupRequest dto) {
-        User dao = modelMapper.map(dto, User.class);
 
-        String hashedPassword = passwordEncoder.encode(dao.getPassword());
+//      convert DTO to DAO or the entity
+        User user = modelMapper.map(dto, User.class);
 
-        dao.setPassword(hashedPassword);
+        String hashedPassword = passwordEncoder.encode(user.getPassword());
 
-        userRepository.save(dao);
+        user.setPassword(hashedPassword);
+        user.setRole("ROLE_USER");
+
+        userRepository.save(user);
     }
 
     public User getUser(String username) {

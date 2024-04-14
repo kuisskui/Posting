@@ -12,6 +12,12 @@
 
 <div class="container">
     <h1 class="display-6">Welcome to Posting</h1>
+    <p sec:authorize="hasAnyRole('ROLE_USER')">
+        your role: ROLE_USER
+    </p>
+    <p sec:authorize="hasAnyRole('ROLE_ADMIN')">
+        your role: ROLE_ADMIN
+    </p>
 
     <p><span th:text="${greeting}"></span></p>
 
