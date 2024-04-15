@@ -35,6 +35,7 @@ public class SignupController {
         if (signupService.isUsernameAvailable(user.getUsername())) {
             signupService.createUser(user);
             model.addAttribute("signupSuccess", true);
+            return "redirect:/login";
         } else {
             model.addAttribute("signupError", "Username not available");
         }
