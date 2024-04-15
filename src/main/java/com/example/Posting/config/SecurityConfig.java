@@ -39,6 +39,11 @@ public class SecurityConfig {
                     .requestMatchers(new AntPathRequestMatcher("/css/**")).permitAll()
                     .requestMatchers(new AntPathRequestMatcher("/js/**")).permitAll()
                     .requestMatchers(new AntPathRequestMatcher("/signup")).permitAll()
+
+                    // unauthenticated users can read restaurants and reviews.
+                    .requestMatchers(new AntPathRequestMatcher("/feed")).permitAll()
+                    // members and admins can also add reviews
+                    .requestMatchers(new AntPathRequestMatcher("/post")).hasAnyRole("USER", "ADMIN")
                     .anyRequest().authenticated()
             )
             .formLogin((form) -> form
@@ -71,7 +76,7 @@ public class SecurityConfig {
                         .userInfoEndpoint(userInfo -> userInfo
                                 .oidcUserService(oidcUserService)
                         )
-                        .successHandler(new SimpleUrlAuthenticationSuccessHandler("/sign"))
+                        .successHandler(new SimpleUrlAuthenticationSuccessHandler("/"))
                         .loginPage("/login").permitAll()
                 );
         }
