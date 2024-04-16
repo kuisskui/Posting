@@ -21,14 +21,20 @@ public class FeedService {
     @Autowired
     private UserService userService;
 
-    public List<PostDTO> getPostDTOs(){
+    public List<PostDTO> findPostDTOs(){
 
         List<PostDTO> postDTOS = new ArrayList<>();
-        List<Post> posts = postService.getPosts();
+        List<Post> posts = postService.findAll();
         for (Post post: posts){
-            User user = userService.getUser(post.getUserId());
+            User user = userService.findUserById(post.getUserId());
             postDTOS.add(new PostDTO(post.getTitle(), post.getContent(), user.getUsername()));
         }
         return postDTOS;
+    }
+
+    public PostDTO findPostDTOิById(Integer id){
+        Post post = postService.findById(id);
+        User user = userService.findUserById(post.getUserId());
+        return new PostDTO(post.getTitle(), post.getContent(), user.getUsername());
     }
 }
