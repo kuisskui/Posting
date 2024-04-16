@@ -16,6 +16,15 @@
         <div>title: <span th:text="${postDTO.title}"></span></div>
         <div th:text="${postDTO.content}"></div>
     </div>
+
+    <div>
+        <div th:each="commentDTO : ${commentDTOs}">
+            comment:
+            <div th:text="${commentDTO.username}"></div>
+            <div th:text="${commentDTO.comment}"></div>
+            <div th:text="${commentDTO.createdTime}"></div>
+        </div>
+    </div>
     <form action="/" th:action="@{/comments/{postId}(postId=${postId})}" th:object="${commentRequest}" method="POST">
         <div id="error-msg" th:if="${commentError}" class="alert alert-danger">
             <span th:text="${commentError}"></span>

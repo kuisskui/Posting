@@ -48,6 +48,7 @@ public class FeedController {
     public String getComment(@PathVariable Integer postId, Model model){
         model.addAttribute("commentRequest", new CommentRequest());
         model.addAttribute("postDTO", feedService.findPostDTOิById(postId));
+        model.addAttribute("commentDTOs", feedService.findCommentDTOsByPostId(postId));
         return "comment";
     }
 
