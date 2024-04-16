@@ -20,9 +20,9 @@
         </div>
 
         <div class="mb-3">
-            <label for="inputContent">Title</label>
-            <input id="inputContent" type="text" th:field="*{content}" class="form-control">
-            <div class="alert alert-warning" th:if="${#fields.hasErrors('content')}" th:errors="*{content}"></div>
+            <label for="inputComment">Title</label>
+            <input id="inputComment" type="text" th:field="*{comment}" class="form-control">
+            <div class="alert alert-warning" th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}"></div>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
