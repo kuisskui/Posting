@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <link th:rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <title>Post Create</title>
+</head>
+<body>
+<div th:insert="~{fragments/header :: header}"></div>
+
+<div class="container">
+    <form action="/posts" th:action="@{/posts}" th:object="${postRequest}" method="POST">
+        <div id="error-msg" th:if="${postError}" class="alert alert-danger">
+            <span th:text="${postError}"></span>
+        </div>
+
+        <div class="mb-3">
+            <label for="inputTitle">Title</label>
+            <input id="inputTitle" type="text" th:field="*{title}" class="form-control">
+            <div class="alert alert-warning" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+        </div>
+
+        <div class="mb-3">
+            <label for="inputContent">Content</label>
+            <input id="inputContent" type="text" th:field="*{content}" class="form-control">
+            <div class="alert alert-warning" th:if="${#fields.hasErrors('content')}" th:errors="*{content}"></div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+</div>
+
+</body>
+</html>
+
