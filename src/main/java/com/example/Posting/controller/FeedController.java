@@ -1,6 +1,7 @@
 package com.example.Posting.controller;
 
 import com.example.Posting.dto.CommentRequest;
+import com.example.Posting.dto.PostDTO;
 import com.example.Posting.repository.PostRepository;
 import com.example.Posting.service.FeedService;
 import jakarta.validation.Valid;
@@ -20,14 +21,16 @@ public class FeedController {
     @GetMapping("/")
     public String feed(Model model){
         model.addAttribute("greeting", "Sawaddee");
-        model.addAttribute("postDTOs", feedService.getPostDTOs());
+        model.addAttribute("postDTOs", feedService.findPostDTOs());
         return "feed";
     }
 
     @GetMapping("/comments/{postId}")
     public String getComment(Integer postId, Model model){
         // TODO send comment form and show the post and comments
+
         model.addAttribute("commentRequest", new CommentRequest());
+        model.addAttribute("post", feedService.findPostDTOิById(postId));
         return "comment";
     }
 
