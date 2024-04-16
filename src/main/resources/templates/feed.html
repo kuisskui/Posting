@@ -24,12 +24,24 @@
     <div sec:authorize="isAuthenticated()">
         <p>Khun <b><span sec:authentication="name"></span></b></p>
         <a class="btn btn-primary" th:href="@{/logout}">Logout</a>
+        <div>
+            <!--Show all post here-->
+            <div th:each="postDTO : ${postDTOs}">
+                <div th:text="${postDTO.username}">username: </div>
+                <div>title: <span th:text="${postDTO.title}"></span></div>
+                <div th:text="${postDTO.content}"></div>
+                <br>
+            </div>
+        </div>
     </div>
+
     <div sec:authorize="isAnonymous()">
         <a class="btn btn-primary" th:href="@{/login}">Login</a>
         <br>
         <a class="btn btn-light" th:href="@{/signup}">Sign Up</a>
     </div>
+
+
 </div>
 
 </body>
