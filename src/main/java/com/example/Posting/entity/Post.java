@@ -16,6 +16,10 @@ public class Post {
     private String content;
     private LocalDateTime createdTime;
 
+    public Integer getId() {
+        return id;
+    }
+
     public Integer getUserId() {
         return userId;
     }

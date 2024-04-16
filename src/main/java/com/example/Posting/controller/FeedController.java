@@ -64,7 +64,6 @@ public class FeedController {
         Integer userId = userService.findByUsername(authentication.getName()).getId();
         commentService.save(commentRequest, userId, postId);
 
-        // TODO save comment
-        return "redirect:/";
+        return "redirect:/comments/" + postId;
     }
 }
