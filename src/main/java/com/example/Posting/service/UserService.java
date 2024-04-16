@@ -10,7 +10,7 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public User getUser(Integer id){
+    public User findUserById(Integer id){
         return userRepository.findById(id).orElse(new User());
     }
 }
