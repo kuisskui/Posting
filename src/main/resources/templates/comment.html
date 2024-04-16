@@ -12,15 +12,18 @@
 
 <div class="container">
     <div>
-
+        th:text="${postDTO.username}
+        <div th:text="${postDTO.username}"></div>
+        <div>title: <span th:text="${postDTO.title}"></span></div>
+        <div th:text="${postDTO.content}"></div>
     </div>
-    <form action="/" th:action="@{/comments}" th:object="${commentRequest}" method="POST">
+    <form action="/" th:action="@{/comments/{postId}(postId=${postId})}" th:object="${commentRequest}" method="POST">
         <div id="error-msg" th:if="${commentError}" class="alert alert-danger">
             <span th:text="${commentError}"></span>
         </div>
 
         <div class="mb-3">
-            <label for="inputComment">Title</label>
+            <label for="inputComment">Comment</label>
             <input id="inputComment" type="text" th:field="*{comment}" class="form-control">
             <div class="alert alert-warning" th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}"></div>
         </div>

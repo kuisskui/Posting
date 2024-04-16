@@ -10,7 +10,12 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public User findUserById(Integer id){
+    public User findById(Integer id){
         return userRepository.findById(id).orElse(new User());
     }
+
+    public User findByUsername(String username){
+        return userRepository.findByUsername(username);
+    }
+
 }

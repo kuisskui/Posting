@@ -26,7 +26,7 @@ public class FeedService {
         List<PostDTO> postDTOS = new ArrayList<>();
         List<Post> posts = postService.findAll();
         for (Post post: posts){
-            User user = userService.findUserById(post.getUserId());
+            User user = userService.findById(post.getUserId());
             postDTOS.add(new PostDTO(post.getTitle(), post.getContent(), user.getUsername()));
         }
         return postDTOS;
@@ -34,7 +34,7 @@ public class FeedService {
 
     public PostDTO findPostDTOิById(Integer id){
         Post post = postService.findById(id);
-        User user = userService.findUserById(post.getUserId());
+        User user = userService.findById(post.getUserId());
         return new PostDTO(post.getTitle(), post.getContent(), user.getUsername());
     }
 }
