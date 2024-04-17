@@ -12,8 +12,8 @@
 
 <div class="container w-50 p-3">
     <h1 class="display-5">Sign Up</h1>
-
     <form action="#" th:action="@{/signup}" th:object="${signupRequest}" method="POST">
+
         <div id="success-msg" th:if="${signupSuccess}"
              class="alert alert-success">
             Successfully signed up! Please <a th:href="@{/login}">login</a>.
@@ -47,6 +47,10 @@
             <label for="inputPassword">Password</label>
             <input id="inputPassword" type="password" th:field="*{password}" class="form-control">
             <div class="alert alert-warning" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+        </div>
+        <div>
+            <input type="checkbox" id="terms" name="terms" value="terms" required>
+            <label for="terms">I have read <a th:href="@{/terms}">Terms of Service</a></label>
         </div>
 
         <button id="submit-button" type="submit" class="btn btn-primary">Sign Up</button>

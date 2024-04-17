@@ -40,6 +40,7 @@ public class SecurityConfig {
                     .requestMatchers(new AntPathRequestMatcher("/js/**")).permitAll()
                     .requestMatchers(new AntPathRequestMatcher("/signup")).permitAll()
 
+                    .requestMatchers(new AntPathRequestMatcher("/terms")).permitAll()
                     // unauthenticated users can read restaurants and reviews.
                     .requestMatchers(new AntPathRequestMatcher("/feed")).permitAll()
                     // members and admins can also add reviews
