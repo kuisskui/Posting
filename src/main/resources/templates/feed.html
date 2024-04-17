@@ -34,6 +34,11 @@
             </div>
         </div>
     </div>
+    <a th:href="@{/posts}">
+        <div>
+            Create Post
+        </div>
+    </a>
 
     <div sec:authorize="isAnonymous()">
         <a class="btn btn-primary" th:href="@{/login}">Login</a>

@@ -19,6 +19,10 @@ public class User {
     private String lastName;
     private String role;
 
+    public Integer getId() {
+        return id;
+    }
+
     public String getUsername() {
         return username;
     }
