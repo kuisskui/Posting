@@ -2,9 +2,9 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Posting Signup</title>
     <link th:rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <script th:src="@{/js/bootstrap.min.js}"></script>
+    <title>signup</title>
 </head>
 <body>
 
@@ -12,8 +12,8 @@
 
 <div class="container w-50 p-3">
     <h1 class="display-5">Sign Up</h1>
-    <a th:href="@{/}">Terms of Service</a>
-    <form action="#" th:action="@{/signup}" method="POST">
+    <form action="#" th:action="@{/signup}" th:object="${signupRequest}" method="POST">
+
         <div id="success-msg" th:if="${signupSuccess}"
              class="alert alert-success">
             Successfully signed up! Please <a th:href="@{/login}">login</a>.
@@ -25,19 +25,28 @@
 
         <div class="mb-3">
             <label for="inputFirstName">First Name</label>
-            <input id="inputFirstName" type="text" name="firstName" class="form-control">
+            <input id="inputFirstName" type="text" th:field="*{firstName}" class="form-control">
+            <div class="alert alert-warning" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
         </div>
         <div class="mb-3">
             <label for="inputLastName">Last Name</label>
-            <input id="inputLastName" type="text" name="lastName" class="form-control">
+            <input id="inputLastName" type="text" th:field="*{lastName}" class="form-control">
+            <div class="alert alert-warning" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
         </div>
         <div class="mb-3">
             <label for="inputUsername">Username</label>
-            <input id="inputUsername" type="text" name="username" class="form-control">
+            <input id="inputUsername" type="text" th:field="*{username}" class="form-control">
+            <div class="alert alert-warning" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+        </div>
+        <div class="mb-3">
+            <label for="inputEmail">Email</label>
+            <input id="inputEmail" type="text" th:field="*{email}" class="form-control">
+            <div class="alert alert-warning" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
         </div>
         <div class="mb-3">
             <label for="inputPassword">Password</label>
-            <input id="inputPassword" type="password" name="password" class="form-control">
+            <input id="inputPassword" type="password" th:field="*{password}" class="form-control">
+            <div class="alert alert-warning" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
         </div>
         <div>
             <input type="checkbox" id="terms" name="terms" value="terms" required>

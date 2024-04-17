@@ -1,5 +1,7 @@
 package com.example.Posting.config;
 
+import com.example.Posting.service.UserDetailsServiceImp;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserRequest;
@@ -14,6 +16,7 @@ import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 
 @Configuration
@@ -28,6 +31,9 @@ public class UserServicesConfiguration {
     public OidcUserService oidcUserService() {
         return new OidcUserServiceImpl();
     }
+
+    @Autowired
+    public UserDetailsServiceImp userDetailsServiceImp;
 
     private class OAuth2UserServiceImpl extends DefaultOAuth2UserService {
         private final DefaultOAuth2UserService delegate =
@@ -60,23 +66,30 @@ public class UserServicesConfiguration {
         { setOauth2UserService(oAuth2UserService()); }
 
         @Override
-        public OidcUser loadUser(OidcUserRequest request)
-                throws OAuth2AuthenticationException {
+        public OidcUser loadUser(OidcUserRequest request) throws OAuth2AuthenticationException {
             String attribute = request.getClientRegistration()
                     .getProviderDetails()
                     .getUserInfoEndpoint()
                     .getUserNameAttributeName();
             OidcUser user = super.loadUser(request);
-
+            userDetailsServiceImp.saveUserDetails(
+                    user.getPreferredUsername(),
+                    user.getEmail(),
+                    user.getGivenName(),
+                    user.getFamilyName()
+            );
             try {
+
                 user = new DefaultOidcUser(new ArrayList<>(),
                         user.getIdToken(), user.getUserInfo(), attribute);
 
             } catch (OAuth2AuthenticationException exception) {
                 throw exception;
             }
-
-            System.out.println(user.getUserInfo());
+            System.out.println("Debug here: ");
+            System.out.println(user.getFullName());
+            System.out.println("user attributes: ");
+            System.out.println(user.getAttributes());
             return user;
         }
     }

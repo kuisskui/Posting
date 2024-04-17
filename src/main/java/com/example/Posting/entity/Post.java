@@ -1,8 +1,5 @@
 package com.example.Posting.entity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
@@ -15,6 +12,18 @@ public class Post {
     private String title;
     private String content;
     private LocalDateTime createdTime;
+
+    public Post(){}
+
+    public Post(Integer userId, String title, String content) {
+        this.userId = userId;
+        this.title = title;
+        this.content = content;
+    }
+
+    public Integer getId() {
+        return id;
+    }
 
     public Integer getUserId() {
         return userId;
@@ -33,7 +42,6 @@ public class Post {
     }
 
     public void setUserId(Integer userId) {
-
         this.userId = userId;
     }
 
@@ -42,11 +50,16 @@ public class Post {
     }
 
     public void setContent(String content) {
-
         this.content = content;
     }
 
     public void setCreatedTime(LocalDateTime createdTime) {
         this.createdTime = createdTime;
     }
+
+    @PrePersist
+    protected void onCreate() {
+        createdTime = LocalDateTime.now();
+    }
+
 }

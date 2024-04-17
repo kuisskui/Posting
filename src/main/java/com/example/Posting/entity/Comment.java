@@ -1,9 +1,6 @@
 package com.example.Posting.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
@@ -47,5 +44,10 @@ public class Comment {
 
     public void setCreatedTime(LocalDateTime createdTime) {
         this.createdTime = createdTime;
+    }
+
+    @PrePersist
+    protected void onCreate(){
+        createdTime = LocalDateTime.now();
     }
 }

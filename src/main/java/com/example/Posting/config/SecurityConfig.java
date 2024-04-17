@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
@@ -38,7 +39,12 @@ public class SecurityConfig {
                     .requestMatchers(new AntPathRequestMatcher("/css/**")).permitAll()
                     .requestMatchers(new AntPathRequestMatcher("/js/**")).permitAll()
                     .requestMatchers(new AntPathRequestMatcher("/signup")).permitAll()
+
                     .requestMatchers(new AntPathRequestMatcher("/terms")).permitAll()
+                    // unauthenticated users can read restaurants and reviews.
+                    .requestMatchers(new AntPathRequestMatcher("/feed")).permitAll()
+                    // members and admins can also add reviews
+                    .requestMatchers(new AntPathRequestMatcher("/post")).hasAnyRole("USER", "ADMIN")
                     .anyRequest().authenticated()
             )
             .formLogin((form) -> form
@@ -53,6 +59,13 @@ public class SecurityConfig {
                     .deleteCookies("JSESSIONID", "remember-me")
                     .permitAll()
             );
+
+        http.headers(headers -> headers
+                .xssProtection(Customizer.withDefaults())
+                .contentSecurityPolicy(csp -> csp
+                        .policyDirectives("form-action 'self'; script-src 'self'"))
+        );
+
 
         ClientRegistrationRepository repository =
                 context.getBean(ClientRegistrationRepository.class);
