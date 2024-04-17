@@ -21,6 +21,10 @@ public class Post {
         this.content = content;
     }
 
+    public Integer getId() {
+        return id;
+    }
+
     public Integer getUserId() {
         return userId;
     }

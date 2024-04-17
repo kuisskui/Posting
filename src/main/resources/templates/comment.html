@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <link th:rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <title>Post Comment</title>
+</head>
+<body>
+<div th:insert="~{fragments/header :: header}"></div>
+
+<div class="container">
+    <div>
+        <div th:text="${postDTO.username}"></div>
+        <div>title: <span th:text="${postDTO.title}"></span></div>
+        <div th:text="${postDTO.content}"></div>
+    </div>
+
+    <div>
+        <div th:each="commentDTO : ${commentDTOs}">
+            comment:
+            <div th:text="${commentDTO.username}"></div>
+            <div th:text="${commentDTO.comment}"></div>
+            <div th:text="${commentDTO.createdTime}"></div>
+        </div>
+    </div>
+    <form action="/" th:action="@{/comments/{postId}(postId=${postId})}" th:object="${commentRequest}" method="POST">
+        <div id="error-msg" th:if="${commentError}" class="alert alert-danger">
+            <span th:text="${commentError}"></span>
+        </div>
+
+        <div class="mb-3">
+            <label for="inputComment">Comment</label>
+            <input id="inputComment" type="text" th:field="*{comment}" class="form-control">
+            <div class="alert alert-warning" th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}"></div>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+</body>
+</html>
+
