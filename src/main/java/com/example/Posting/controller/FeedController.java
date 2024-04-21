@@ -39,8 +39,8 @@ public class FeedController {
 
     @GetMapping("/")
     public String feed(Model model){
-        model.addAttribute("greeting", "Sawaddee");
         model.addAttribute("postDTOs", feedService.findPostDTOs());
+        model.addAttribute("postRequest", new PostRequest());
         return "feed";
     }
 
@@ -57,7 +57,8 @@ public class FeedController {
                     .map(DefaultMessageSourceResolvable::getDefaultMessage)
                     .collect(Collectors.toList());
             model.addAttribute("postError", errorMessages);
-            return "post";
+            model.addAttribute("postDTOs", feedService.findPostDTOs());
+            return "feed";
         }
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
