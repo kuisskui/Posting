@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Posting.</title>
+    <link th:rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script src="js/explore.js"></script>
+</head>
+<body>
+<div th:insert="~{fragments/header :: header}"></div>
+
+<div class="container">
+    <div sec:authorize="isAuthenticated()">
+        <div>
+            <input type="text" id="searchInput" placeholder="Search by hashtag...">
+            <button onclick="searchPosts()">Search</button>
+        </div>
+    </div>
+    <div sec:authorize="isAnonymous()">
+        <a class="btn btn-primary" th:href="@{/login}">Login</a>
+        <a class="btn btn-light" th:href="@{/signup}">Sign Up</a>
+    </div>
+</div>
+</body>
+</html>
+

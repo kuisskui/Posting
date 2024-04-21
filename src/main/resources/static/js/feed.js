@@ -21,12 +21,15 @@ function renderRecommendations() {
         const tagElement = document.createElement('span');
         tagElement.textContent = tag;
         tagElement.classList.add('recommendation');
-        
+
+        // Add click event listener to each recommendation tag
+        tagElement.addEventListener('click', () => redirectToExplore(tag));
+
         // Add follow button
         const followButton = document.createElement('button');
         followButton.textContent = "Follow";
         followButton.addEventListener('click', () => followTag(tag));
-        
+
         tagElement.appendChild(followButton);
         recommendationsElement.appendChild(tagElement);
     });
@@ -45,22 +48,26 @@ function renderPosts() {
     const feedElement = document.getElementById('feed');
     feedElement.innerHTML = '';
 
-    // Display posts with followed tags first
-    followedTags.forEach(tag => {
-        const postsWithTag = postData.filter(post => post.text.includes(tag));
-        postsWithTag.forEach(post => {
-            const postElement = document.createElement('div');
-            postElement.textContent = `${post.username}: ${post.text}`;
-            feedElement.appendChild(postElement);
-        });
-    });
-
-    // Display posts without followed tags
-    const otherPosts = postData.filter(post => !followedTags.some(tag => post.text.includes(tag)));
-    otherPosts.forEach(post => {
+    postData.forEach(post => {
         const postElement = document.createElement('div');
-        postElement.textContent = `${post.username}: ${post.text}`;
-        feedElement.appendChild(postElement);
+        postElement.classList.add('post');
+
+        const postContent = document.createElement('span');
+        postContent.innerHTML = `<b>${post.username}</b>: ${post.text}`;
+
+        const commentButton = document.createElement('button');
+        commentButton.textContent = "Comment";
+        commentButton.addEventListener('click', () => commentOnPost(post.username, post.text));
+
+        postElement.appendChild(postContent);
+        postElement.appendChild(commentButton);
+
+        const postLink = document.createElement('a');
+        postLink.href = "#";
+        postLink.onclick = () => redirectToPostPage(post.username, post.text);
+        postLink.appendChild(postElement);
+
+        feedElement.appendChild(postLink);
     });
 }
 
@@ -94,6 +101,19 @@ function submitPost() {
     }
 }
 
+// Function to handle comment button clicks
+function commentOnPost(username, text) {
+    // Implement your comment functionality here
+    console.log(`Comment on post by ${username}: ${text}`);
+}
+
+// Function to handle post clicks and redirect to the dedicated post page
+function redirectToPostPage(username, text) {
+    // You can implement the redirection logic based on your application's routing
+    console.log(`Redirecting to post page for post by ${username}: ${text}`);
+    // Example: window.location.href = '/post/' + postId;
+}
+
 // Function to filter posts based on hashtags
 function searchPosts() {
     const searchInput = document.getElementById('searchInput');
@@ -106,8 +126,11 @@ function searchPosts() {
 
 // Function to redirect to explore.html with search term parameter
 function redirectToExplore(searchTerm) {
-    window.location.href = `explore.html?search=${encodeURIComponent(searchTerm)}`;
+    window.location.href = '/explore?search=' + encodeURIComponent(searchTerm);
 }
+
+// Add event listener to the search button
+document.getElementById('searchButton').addEventListener('click', searchPosts);
 
 // Call renderPosts function to initially render posts
 renderPosts();

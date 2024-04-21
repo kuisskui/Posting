@@ -3,33 +3,163 @@
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
-    <title>Posting.</title>
+    <title>Posting</title>
     <link th:rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <script th:src="@{/js/bootstrap.min.js}"></script>
+    <style>
+        /* Twitter-like styles */
+
+     /* Flexbox styles */
+
+.container {
+    max-width: 900px; /* Increased width for better visualization */
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.flex-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.posts-section {
+    flex-grow: 1;
+    margin-right: 10px; /* Added margin to separate from sidebar */
+}
+
+.sidebar {
+    flex-shrink: 0;
+    width: 300px; /* Set width for the sidebar */
+}
+
+.search-section,
+.trending-section {
+    margin-bottom: 20px; /* Added margin between search and trending */
+}
+
+/* Other styles remain the same */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f8fa;
+}
+
+
+#header {
+    background-color: #1da1f2;
+    color: white;
+    padding: 15px 20px;
+    text-align: center;
+    font-size: 20px;
+}
+
+.post {
+    background-color: white;
+    border: 1px solid #e1e8ed;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.post span {
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.post button {
+    background-color: transparent;
+    border: none;
+    color: #1da1f2;
+    cursor: pointer;
+    outline: none;
+    padding: 0;
+    margin-left: 10px;
+}
+
+.post button:hover {
+    text-decoration: underline;
+}
+
+#textInput {
+    width: 100%;
+    min-height: 80px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #1da1f2;
+    border-radius: 8px;
+    resize: none;
+    font-size: 16px;
+}
+
+#postButton {
+    background-color: #1da1f2;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    padding: 10px 20px;
+    font-size: 16px;
+}
+
+#postButton:hover {
+    background-color: #0c89c1;
+}
+
+#searchInput {
+    width: calc(100% - 80px);
+    padding: 10px;
+    border: 1px solid #1da1f2;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+#searchButton {
+    background-color: #1da1f2;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    padding: 10px 20px;
+    font-size: 16px;
+}
+
+#searchButton:hover {
+    background-color: #0c89c1;
+}
+
+    </style>
 </head>
 <body>
-<div th:insert="~{fragments/header :: header}"></div>
+    <div th:insert="~{fragments/header :: header}"></div>
 
-<div class="container">
-    <div sec:authorize="isAuthenticated()">
-        <div>
-            <input type="text" id="searchInput" placeholder="Search by hashtag...">
-            <button onclick="searchPosts()">Search</button>
+    <div class="container">
+        <div sec:authorize="isAuthenticated()">
+            <div class="flex-container">
+                <div class="posts-section">
+                    <b><span sec:authentication="name"></span></b>
+                    <textarea id="textInput" placeholder="Write your post here..."></textarea>
+                    <button onclick="submitPost()">Posting</button>
+                    <div id="feed"></div>
+                </div>
+                <div class="sidebar">
+                    <div class="search-section">
+                        <div>Explores#</div>
+                        <input type="text" id="searchInput" placeholder="Search by hashtag...">
+                        <button id="searchButton">Search</button>
+                    </div>
+                    <div class="trending-section">
+                        <div>Trending#</div>
+                        <div id="recommendations"></div>
+                    </div>
+                </div>
+            </div>
+            <script src="js/feed.js"></script>
         </div>
-        <div id="recommendations"></div>
-        <div>
-            <b><span sec:authentication="name"></span></b>
-            <textarea id="textInput" placeholder="Write your post here..."></textarea>
-            <button onclick="submitPost()">Submit Post</button>
+        <div sec:authorize="isAnonymous()">
+            <a class="btn btn-primary" th:href="@{/login}">Login</a>
+            <a class="btn btn-light" th:href="@{/signup}">Sign Up</a>
         </div>
-        <div id="feed"></div>
-        <script src="js/feed.js"></script>
     </div>
-    <div sec:authorize="isAnonymous()">
-        <a class="btn btn-primary" th:href="@{/login}">Login</a>
-        <a class="btn btn-light" th:href="@{/signup}">Sign Up</a>
-    </div>
-</div>
 </body>
 </html>
-
