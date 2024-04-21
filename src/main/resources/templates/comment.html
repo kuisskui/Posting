@@ -15,11 +15,14 @@
         <div th:text="${postDTO.username}"></div>
         <div>title: <span th:text="${postDTO.title}"></span></div>
         <div th:text="${postDTO.content}"></div>
+
+        comment:
     </div>
 
     <div>
         <div th:each="commentDTO : ${commentDTOs}">
-            comment:
+            <br><br>
+
             <div th:text="${commentDTO.username}"></div>
             <div th:text="${commentDTO.comment}"></div>
             <div th:text="${commentDTO.createdTime}"></div>

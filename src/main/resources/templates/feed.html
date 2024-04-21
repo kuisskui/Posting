@@ -10,7 +10,13 @@
 <body>
 <div th:insert="~{fragments/header :: header}"></div>
 <div class="container">
-
+    <h1 class="display-6">Welcome to Posting</h1>
+    <p sec:authorize="hasAnyRole('ROLE_USER')">
+        your role: ROLE_USER
+    </p>
+    <p sec:authorize="hasAnyRole('ROLE_ADMIN')">
+        your role: ROLE_ADMIN
+    </p>
     <div sec:authorize="isAuthenticated()">
         <div>
             <input type="text" id="searchInput" placeholder="Search by hashtag...">
@@ -19,10 +25,27 @@
         <div id="recommendations"></div>
         <div>
             <b><span sec:authentication="name"></span></b>
-            <textarea id="textInput" placeholder="Write your post here..."></textarea>
-            <button onclick="submitPost()">Submit Post</button>
+            <br>
+            <form action="/posts" th:action="@{/posts}" th:object="${postRequest}" method="POST">
+                <div id="error-msg" th:if="${postError}" class="alert alert-danger">
+                    <span th:text="${postError}"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label for="inputTitle">Title</label>
+                    <input id="inputTitle" type="text" th:field="*{title}" class="form-control">
+                    <div class="alert alert-warning" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="inputContent">Content</label>
+                    <input id="inputContent" type="text" th:field="*{content}" class="form-control">
+                    <div class="alert alert-warning" th:if="${#fields.hasErrors('content')}" th:errors="*{content}"></div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
         </div>
-        <div id="feed"></div>
     </div>
 
 <script>
@@ -144,19 +167,11 @@
     renderRecommendations();
 </script>
 
-    <h1 class="display-6">Welcome to Posting</h1>
-    <p sec:authorize="hasAnyRole('ROLE_USER')">
-        your role: ROLE_USER
-    </p>
-    <p sec:authorize="hasAnyRole('ROLE_ADMIN')">
-        your role: ROLE_ADMIN
-    </p>
-
     <p><span th:text="${greeting}"></span></p>
 
     <div sec:authorize="isAuthenticated()">
-        <p>Khun <b><span sec:authentication="name"></span></b></p>
-        <a class="btn btn-primary" th:href="@{/logout}">Logout</a>
+<!--        <p>Khun <b><span sec:authentication="name"></span></b></p>-->
+<!--        <a class="btn btn-primary" th:href="@{/logout}">Logout</a>-->
         <div>
             <!--Show all post here-->
             <div th:each="postDTO : ${postDTOs}">
@@ -169,11 +184,11 @@
         </div>
 
     </div>
-    <a th:href="@{/posts}">
-        <div>
-            Create Post
-        </div>
-    </a>
+<!--    <a th:href="@{/posts}">-->
+<!--        <div>-->
+<!--            Create Post-->
+<!--        </div>-->
+<!--    </a>-->
 
     <div sec:authorize="isAnonymous()">
         <a class="btn btn-primary" th:href="@{/login}">Login</a>
