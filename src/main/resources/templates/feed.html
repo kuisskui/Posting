@@ -6,26 +6,84 @@
     <link th:rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <script th:src="@{/js/bootstrap.min.js}"></script>
     <title>Feed</title>
+    <style>
+        .header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000; /* Ensure the header stays on top of other content */
+            background-color: #ffffff; /* Add any styles you want for the header */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Add a shadow effect */
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding-top: 80px;
+        }
+
+        .container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .post {
+            border-bottom: 1px solid #ddd;
+            padding: 20px 0;
+        }
+
+        .post .username {
+            font-weight: bold;
+        }
+
+        .post .content {
+            margin-top: 5px;
+            color: #333;
+        }
+
+        .post .comment-link {
+            color: #1da1f2;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background-color: #1da1f2;
+            border-color: #1da1f2;
+        }
+
+        .btn-primary:hover {
+            background-color: #0f75bc;
+            border-color: #0f75bc;
+        }
+
+        .btn-light {
+            background-color: #fff;
+            border-color: #ddd;
+            color: #333;
+        }
+
+        .btn-light:hover {
+            background-color: #f5f5f5;
+            border-color: #ddd;
+            color: #333;
+        }
+    </style>
 </head>
 <body>
-<div th:insert="~{fragments/header :: header}"></div>
+<div class="header">
+    <div th:insert="~{fragments/header :: header}"></div>
+</div>
 <div class="container">
     <h1 class="display-6">Welcome to Posting</h1>
-    <p sec:authorize="hasAnyRole('ROLE_USER')">
-        your role: ROLE_USER
-    </p>
-    <p sec:authorize="hasAnyRole('ROLE_ADMIN')">
-        your role: ROLE_ADMIN
-    </p>
     <div sec:authorize="isAuthenticated()">
         <div>
-            <input type="text" id="searchInput" placeholder="Search by hashtag...">
-            <button onclick="searchPosts()">Search</button>
-        </div>
-        <div id="recommendations"></div>
-        <div>
-            <b><span sec:authentication="name"></span></b>
-            <br>
             <form action="/posts" th:action="@{/posts}" th:object="${postRequest}" method="POST">
                 <div id="error-msg" th:if="${postError}" class="alert alert-danger">
                     <span th:text="${postError}"></span>
@@ -145,36 +203,16 @@
         }
     }
 
-    // Function to filter posts based on hashtags
-    function searchPosts() {
-        const searchInput = document.getElementById('searchInput');
-        const searchTerm = searchInput.value.toLowerCase();
-
-        if (searchTerm) {
-            redirectToExplore(searchTerm);
-        }
-    }
-
-    // Function to redirect to explore.html with search term parameter
-    function redirectToExplore(searchTerm) {
-        window.location.href = `explore.html?search=${encodeURIComponent(searchTerm)}`;
-    }
-
     // Call renderPosts function to initially render posts
     renderPosts();
-
-    // Call renderRecommendations function to initially render recommendation tags
-    renderRecommendations();
 </script>
 
     <p><span th:text="${greeting}"></span></p>
 
     <div sec:authorize="isAuthenticated()">
-<!--        <p>Khun <b><span sec:authentication="name"></span></b></p>-->
-<!--        <a class="btn btn-primary" th:href="@{/logout}">Logout</a>-->
-        <div>
+        <div class="post-container">
             <!--Show all post here-->
-            <div th:each="postDTO : ${postDTOs}">
+            <div class="post" th:each="postDTO : ${postDTOs}">
                 <div th:text="${postDTO.username}">username: </div>
                 <div>title: <span th:text="${postDTO.title}"></span></div>
                 <div th:text="${postDTO.content}"></div>
@@ -184,11 +222,6 @@
         </div>
 
     </div>
-<!--    <a th:href="@{/posts}">-->
-<!--        <div>-->
-<!--            Create Post-->
-<!--        </div>-->
-<!--    </a>-->
 
     <div sec:authorize="isAnonymous()">
         <a class="btn btn-primary" th:href="@{/login}">Login</a>
