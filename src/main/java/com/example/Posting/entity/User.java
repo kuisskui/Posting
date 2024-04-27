@@ -1,8 +1,6 @@
 package com.example.Posting.entity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.example.Posting.config.AttributeEncryptor;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
@@ -12,10 +10,17 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Convert(converter = AttributeEncryptor.class)
     private String username = "Not found";
+
+    @Convert(converter = AttributeEncryptor.class)
     private String email;
     private String password;
+
+    @Convert(converter = AttributeEncryptor.class)
     private String firstName;
+
+    @Convert(converter = AttributeEncryptor.class)
     private String lastName;
     private String role;
 
