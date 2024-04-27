@@ -58,3 +58,5 @@ build/
 .vscode/
 src/main/resources/.env
 *.DS_Store
+
+log/
