@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class CommentService {
@@ -17,7 +18,7 @@ public class CommentService {
     @Autowired
     private CommentRepository commentRepository;
 
-    public void save(CommentRequest commentRequest, Integer userId, Integer postId){
+    public void save(CommentRequest commentRequest, UUID userId, Integer postId){
         Comment comment = modelMapper.map(commentRequest, Comment.class);
         comment.setUserId(userId);
         comment.setPostId(postId);

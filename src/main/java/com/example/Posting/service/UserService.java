@@ -5,12 +5,14 @@ import com.example.Posting.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public User findById(Integer id){
+    public User findById(UUID id){
         return userRepository.findById(id).orElse(new User());
     }
 

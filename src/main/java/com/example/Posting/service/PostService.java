@@ -2,7 +2,6 @@ package com.example.Posting.service;
 
 import com.example.Posting.entity.Post;
 import com.example.Posting.repository.PostRepository;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

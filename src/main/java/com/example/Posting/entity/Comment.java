@@ -3,22 +3,23 @@ package com.example.Posting.entity;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Integer userId;
+    private UUID userId;
     private Integer postId;
     private String comment;
     private LocalDateTime createdTime;
 
-    public Integer getUserId() {
+    public UUID getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(UUID userId) {
         this.userId = userId;
     }
 

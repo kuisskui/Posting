@@ -3,12 +3,15 @@ import com.example.Posting.config.AttributeEncryptor;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.UUID;
+
 @Data
 @Entity
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @GeneratedValue
+    private UUID id;
+
 
     @Convert(converter = AttributeEncryptor.class)
     private String username = "Not found";
@@ -24,7 +27,7 @@ public class User {
     private String lastName;
     private String role;
 
-    public Integer getId() {
+    public UUID getId() {
         return id;
     }
 

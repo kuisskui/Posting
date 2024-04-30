@@ -2,20 +2,21 @@ package com.example.Posting.entity;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Integer userId;
+    private UUID userId;
     private String title;
     private String content;
     private LocalDateTime createdTime;
 
     public Post(){}
 
-    public Post(Integer userId, String title, String content) {
+    public Post(UUID userId, String title, String content) {
         this.userId = userId;
         this.title = title;
         this.content = content;
@@ -25,7 +26,7 @@ public class Post {
         return id;
     }
 
-    public Integer getUserId() {
+    public UUID getUserId() {
         return userId;
     }
 
@@ -41,7 +42,7 @@ public class Post {
         return createdTime;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(UUID userId) {
         this.userId = userId;
     }
 

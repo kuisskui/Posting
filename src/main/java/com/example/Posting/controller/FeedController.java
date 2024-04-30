@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Controller
@@ -62,7 +63,7 @@ public class FeedController {
         }
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Integer userId = userService.findByUsername(authentication.getName()).getId();
+        UUID userId = userService.findByUsername(authentication.getName()).getId();
 
             postService.createPost(new Post(userId, post.getTitle(), post.getContent()));
 
@@ -89,7 +90,7 @@ public class FeedController {
             return "redirect:/comments/" + postId;
         }
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Integer userId = userService.findByUsername(authentication.getName()).getId();
+        UUID userId = userService.findByUsername(authentication.getName()).getId();
         commentService.save(commentRequest, userId, postId);
 
         return "redirect:/comments/" + postId;
