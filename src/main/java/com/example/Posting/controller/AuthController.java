@@ -27,15 +27,15 @@ public class AuthController {
         return "login";
     }
 
-    // @PostMapping("/login")
-    // public String loginFailure(@RequestParam(name = "username") String username) {
-    //     try {
-    //         userDetailsService.updateFailedAttempts(username);
-    //     } catch (UsernameNotFoundException e) {
-    //         // Username not found, do nothing
-    //     }
-    //     return "redirect:/login?error";
-    // }
+    @PostMapping("/login")
+    public String loginFailure(@RequestParam(name = "username") String username) {
+        try {
+            userDetailsService.updateFailedAttempts(username);
+        } catch (UsernameNotFoundException e) {
+            // Username not found, do nothing
+        }
+        return "redirect:/login?error";
+    }
 
     @GetMapping("/logout")
     public String logout(HttpServletRequest request,
