@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -36,9 +35,9 @@ public class UserDetailsServiceImp implements UserDetailsService {
             throw new UsernameNotFoundException("Could not find user");
         }
 
-        if (!user.isAccountNonLocked()) {
-            throw new LockedException("User account is locked");
-        }
+        // if (!user.isAccountNonLocked()) {
+        //     throw new LockedException("User account is locked");
+        // }
 
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority(user.getRole()));

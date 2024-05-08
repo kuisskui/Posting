@@ -23,8 +23,15 @@ public class AuthController {
     private UserDetailsServiceImp userDetailsService;
 
     @GetMapping("/login")
-    public String loginView() {
-        return "login";
+    public String loginView(@RequestParam(name = "timeout", required = false) String timeout,
+                            @RequestParam(name = "expired", required = false) String expired) {
+        if (timeout != null) {
+            return "timeout";
+        } else if (expired != null) {
+            return "expired";
+        } else {
+            return "login";
+        }
     }
 
     @PostMapping("/login")
