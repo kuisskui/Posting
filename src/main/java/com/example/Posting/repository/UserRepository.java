@@ -10,4 +10,6 @@ import java.util.UUID;
 public interface UserRepository extends JpaRepository<User, UUID> {
     // SELECT * FROM Member WHERE username = ‘username in parameter’
     User findByUsername(String username);
+
+    User findByEmail(String email);
 }

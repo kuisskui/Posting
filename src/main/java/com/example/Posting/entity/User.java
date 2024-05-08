@@ -28,7 +28,7 @@ public class User {
     private String role;
 
     @Column(name = "account_non_locked")
-    private boolean accountNonLocked = true;
+    private boolean accountNonLocked;
 
     @Column(name = "failed_attempt")
     private int failedAttempt;

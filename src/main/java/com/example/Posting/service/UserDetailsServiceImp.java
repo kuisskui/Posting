@@ -36,7 +36,6 @@ public class UserDetailsServiceImp implements UserDetailsService {
             throw new UsernameNotFoundException("Could not find user");
         }
 
-        user.setAccountNonLocked(true);
         if (!user.isAccountNonLocked()) {
             throw new LockedException("User account is locked");
         }
@@ -48,31 +47,37 @@ public class UserDetailsServiceImp implements UserDetailsService {
                 + Instant.now());
         logger.info(username + " signing in with role " + user.getRole());
 
+        user.setFailedAttempt(0);
+        userRepository.save(user);
+
         return new org.springframework.security.core.userdetails.User(
                 user.getUsername(), user.getPassword(), authorities);
     }
 
-    // public void updateFailedAttempts(User user) {
-    //     user.setFailedAttempt(user.getFailedAttempt() + 1);
-    //     if (user.getFailedAttempt() >= MAX_FAILED_ATTEMPTS) {
-    //         user.setAccountNonLocked(false);
-    //         user.setLockTime(new Date());
+    // public void updateFailedAttempts(String username) {
+    //     User user = userRepository.findByUsername(username);
+    //     if (user != null) {
+    //         user.setFailedAttempt(user.getFailedAttempt() + 1);
+    //         if (user.getFailedAttempt() >= MAX_FAILED_ATTEMPTS) {
+    //             user.setAccountNonLocked(false);
+    //             user.setLockTime(new Date());
+    //         }
+    //         userRepository.save(user);
     //     }
-    //     userRepository.save(user);
     // }
 
     public void updateFailedAttempts(String username) {
         User user = userRepository.findByUsername(username);
         if (user != null) {
-            user.setFailedAttempt(user.getFailedAttempt() + 1);
-            if (user.getFailedAttempt() >= MAX_FAILED_ATTEMPTS) {
+            int newFailAttempts = user.getFailedAttempt() + 1;
+            if (newFailAttempts >= MAX_FAILED_ATTEMPTS) {
                 user.setAccountNonLocked(false);
-                user.setLockTime(new Date());
+            } else {
+                user.setFailedAttempt(newFailAttempts);
+                userRepository.save(user);
             }
-            userRepository.save(user);
         }
     }
-    
 
     public void saveUserDetails(String username, String email, String firstName, String lastName){
         User user = new User();
