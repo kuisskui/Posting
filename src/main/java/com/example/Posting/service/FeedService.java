@@ -5,14 +5,11 @@ import com.example.Posting.dto.PostDTO;
 import com.example.Posting.entity.Comment;
 import com.example.Posting.entity.Post;
 import com.example.Posting.entity.User;
-import com.example.Posting.repository.PostRepository;
-import com.example.Posting.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class FeedService {

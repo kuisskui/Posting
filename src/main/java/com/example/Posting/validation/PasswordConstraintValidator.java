@@ -5,7 +5,6 @@ import jakarta.validation.ConstraintValidatorContext;
 import org.passay.*;
 
 import java.util.List;
-import java.util.regex.Pattern;
 
 public class PasswordConstraintValidator implements ConstraintValidator<ValidPassword, String> {
 

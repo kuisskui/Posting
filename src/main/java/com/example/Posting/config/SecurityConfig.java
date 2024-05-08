@@ -1,6 +1,6 @@
 package com.example.Posting.config;
 
-import com.example.Posting.service.UserDetailsServiceImp;
+// import com.example.Posting.service.UserDetailsServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -21,8 +21,8 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Autowired
-    private UserDetailsServiceImp userDetailsServiceImp;
+//     @Autowired
+//     private UserDetailsServiceImp userDetailsServiceImp;
 
     @Autowired
     private OidcUserService oidcUserService;
