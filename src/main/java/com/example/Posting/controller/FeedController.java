@@ -2,6 +2,7 @@ package com.example.Posting.controller;
 
 import com.example.Posting.dto.PostRequest;
 import com.example.Posting.entity.Post;
+import com.example.Posting.ratelimit.RateLimited;
 import com.example.Posting.dto.CommentRequest;
 import com.example.Posting.service.CommentService;
 import com.example.Posting.service.FeedService;
@@ -45,6 +46,7 @@ public class FeedController {
         return "feed";
     }
 
+    @RateLimited
     @GetMapping("/posts")
     public String getPost(Model model){
         model.addAttribute("postRequest", new PostRequest());
